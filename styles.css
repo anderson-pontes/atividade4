@@ -1,0 +1,370 @@
+/*
+==================================================
+ÍNDICE DA FOLHA DE ESTILOS (TABLE OF CONTENTS)
+==================================================
+1.  RESET & DEFINIÇÕES GLOBAIS
+    - Reset (*, ::before, ::after)
+    - Variáveis CSS (:root)
+    - Estilos Globais (html, body)
+
+2.  ESTILOS DE ELEMENTOS BASE
+    - Tipografia (h1, h2, h3, p)
+    - Links (a, a:hover)
+
+3.  ESTRUTURA E LAYOUT
+    - Container Principal (.container, .conteudo-principal, .conteudo-lateral)
+
+4.  COMPONENTES
+    4.1. Header (#inicio, #inicio h1, .perfil-foto, .slogan)
+    4.2. Navegação Principal (.menu-navegacao)
+    4.3. Menu Hamburger (.hamburger, .menu-ativo)
+    4.4. Seções e Cards (section, .conteudo-lateral, .habilidades-grid, .habilidade-card)
+    4.5. Componentes Específicos (.botao-contato)
+    4.6. Rodapé (footer)
+
+5.  ANIMAÇÕES
+    - @keyframes (fadeIn, fadeInUp)
+
+6.  MEDIA QUERIES (RESPONSIVIDADE)
+    - Telas de até 992px
+    - Telas de até 768px
+==================================================
+*/
+
+
+/* 1. RESET & DEFINIÇÕES GLOBAIS
+-------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Paleta de Cores */
+    --cor-primaria-gradiente: linear-gradient(90deg, #3498db, #9b59b6, #e74c3c);
+    --cor-acento: #3498db; 
+    --cor-fundo: #121212; 
+    --cor-fundo-card: #1e1e1e; 
+    --cor-texto: #e0e0e0; 
+    --cor-texto-claro: #ffffff; 
+    --cor-texto-secundario: #a0a0a0; 
+    
+    /* Outras Variáveis */
+    --sombra-card: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --fonte-principal: 'Poppins', sans-serif;
+    --borda-raio: 12px;
+    --transicao-suave: all 0.3s ease-in-out;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.7;
+}
+
+
+/* 2. ESTILOS DE ELEMENTOS BASE
+-------------------------------------------------- */
+h1, h2, h3 {
+    color: var(--cor-texto-claro);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    position: relative;
+    padding-bottom: 0.8rem;
+}
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--cor-primaria-gradiente);
+    border-radius: 2px;
+}
+
+p { 
+    margin-bottom: 1.2rem;
+    color: var(--cor-texto-secundario);
+}
+
+a { 
+    color: var(--cor-acento); 
+    text-decoration: none; 
+    transition: var(--transicao-suave);
+}
+a:hover {
+    filter: brightness(1.2);
+    text-decoration: none;
+}
+
+
+/* 3. ESTRUTURA E LAYOUT
+-------------------------------------------------- */
+.container {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 1rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.conteudo-principal { flex: 3; }
+.conteudo-lateral { flex: 1; }
+
+
+/* 4. COMPONENTES
+-------------------------------------------------- */
+
+/* 4.1. Header */
+#inicio {
+    background: linear-gradient(135deg, rgba(30,30,30,0.95), rgba(18,18,18,0.98)), url('https://www.transparenttextures.com/patterns/cubes.png');
+    color: var(--cor-texto-claro);
+    text-align: center;
+    padding: 4rem 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#inicio h1 {
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: var(--cor-primaria-gradiente);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+    animation: fadeIn 2s ease-in-out;
+}
+.perfil-foto {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    padding: 5px;
+    background: var(--cor-primaria-gradiente);
+    box-shadow: 0 0 20px rgba(155, 89, 182, 0.4);
+    transition: var(--transicao-suave);
+    animation: fadeIn 1.5s ease-in-out;
+}
+.perfil-foto:hover {
+    transform: scale(1.05) rotate(3deg);
+}
+.slogan {
+    font-style: normal;
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    max-width: 600px;
+    animation: fadeInUp 2s ease-in-out;
+}
+
+/* 4.2. Navegação Principal */
+.menu-navegacao {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0.8rem 0;
+    background-color: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.menu-navegacao ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+.menu-navegacao ul li a {
+    color: var(--cor-texto);
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    border-radius: var(--borda-raio);
+    transition: var(--transicao-suave);
+}
+.menu-navegacao ul li a:hover {
+    color: var(--cor-texto-claro);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 4.3. Menu Hamburger */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001;
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+.hamburger .line {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: var(--cor-texto-claro);
+    margin: 6px 0;
+    transition: var(--transicao-suave);
+}
+.menu-ativo .hamburger .line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+.menu-ativo .hamburger .line:nth-child(2) {
+    opacity: 0;
+}
+.menu-ativo .hamburger .line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* 4.4. Seções e Cards */
+section, .conteudo-lateral article, .conteudo-lateral aside {
+    background-color: var(--cor-fundo-card);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border-radius: var(--borda-raio);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: var(--sombra-card);
+    transition: var(--transicao-suave);
+}
+section:hover, .conteudo-lateral article:hover, .conteudo-lateral aside:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+.habilidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+.habilidade-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--cor-texto);
+    text-align: center;
+    padding: 1rem;
+    border-radius: var(--borda-raio);
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transicao-suave);
+}
+.habilidade-card:hover {
+    color: var(--cor-texto-claro);
+    background-color: var(--cor-acento);
+}
+
+/* 4.5. Componentes Específicos */
+.botao-contato {
+    display: inline-block;
+    background: var(--cor-acento);
+    color: var(--cor-texto-claro);
+    padding: 0.8rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-align: center;
+    transition: var(--transicao-suave);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+}
+.botao-contato:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+}
+
+/* 4.6. Rodapé */
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: var(--cor-fundo-card);
+    color: var(--cor-texto-secundario);
+    margin-top: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* 5. ANIMAÇÕES
+-------------------------------------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* 6. MEDIA QUERIES (RESPONSIVIDADE)
+-------------------------------------------------- */
+
+/* Telas de até 992px (Tablets em modo paisagem) */
+@media (max-width: 992px) {
+    .container { 
+        flex-direction: column; 
+    }
+}
+
+/* Telas de até 768px (Tablets em modo retrato e celulares) */
+@media (max-width: 768px) {
+    #inicio { 
+        padding: 3rem 1rem; 
+        min-height: auto;
+    }
+
+    section, .conteudo-lateral article, .conteudo-lateral aside { 
+        padding: 1.5rem; 
+    }
+
+    /* Estilos do Menu Hamburger Ativo */
+    .hamburger {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+    #nav-links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 80%;
+        height: 100vh;
+        background-color: var(--cor-fundo-card);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+    .menu-ativo #nav-links {
+        transform: translateX(0);
+    }
+    #nav-links li a {
+        color: var(--cor-texto-claro);
+        font-size: 1.2rem;
+    }
+
+    /* Sobrescreve comportamento antigo do menu */
+    .menu-navegacao ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .menu-navegacao ul li { 
+        width: auto; 
+    }
+}
